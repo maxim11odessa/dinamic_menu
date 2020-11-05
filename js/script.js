@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
    //Timer
 
-   const deadline = '2020-11-5';
+   const deadline = '2021-11-5';
 
    function getTimeRemaining(endtime) {
       const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
          seconds = document.querySelector('#seconds'),
          timeInterval = setInterval(updateClock, 1000);
 
-         updateClock();
-         
+      updateClock();
+
       function updateClock() {
          const t = getTimeRemaining(endtime);
 
@@ -91,4 +91,42 @@ document.addEventListener('DOMContentLoaded', () => {
    }
 
    setClock('.timer', deadline);
+
+
+   //Modal
+
+   const modalTrigger = document.querySelectorAll('[data-modal]'),
+      modal = document.querySelector('.modal'),
+      modalCloseBtn = document.querySelector('[data-close]');
+
+   modalTrigger.forEach(btn => {
+      btn.addEventListener('click', () => {
+         modal.classList.add('show');
+         modal.classList.remove('hide');
+         document.body.style.overflow = 'hidden';
+         modal.style.display = 'block';
+      });
+   });
+
+   function close() {
+      modal.classList.add('hide');
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+      modal.style.display = 'none';
+   }
+
+   modalCloseBtn.addEventListener('click', close);
+
+   modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        close();
+      }
+   });
+
+   document.addEventListener('keydown', (e) => {
+      if (e.code === "Escape" && modal.classList.contains('show')) {
+         close();
+      }
+   });
+
 });
